@@ -4,18 +4,25 @@ import org.springframework.util.ObjectUtils;
 
 import br.com.rscruz.model.ParametrosParaCalculoWrapper;
 
-public class RegraDeCalculoPorTipoDeVeiculo extends RegraDeCalculo {
+public class RegraDeCalculoPorTipoDeVeiculo extends RegraDeCalculoDecorator {
 
-	@Override
-	protected double aplicarRegra(ParametrosParaCalculoWrapper parametro) {
+	public RegraDeCalculoPorTipoDeVeiculo( RegraDeCalculo regra ) {
 
-		
-		return parametro.getVeiculo().getFatorMultiplicador()*1;
+		this.regra = regra;
+
+		this.parametro = this.regra.parametro;
+
 	}
 
 	@Override
 	protected boolean validar(ParametrosParaCalculoWrapper parametro) {
 
 		return !ObjectUtils.isEmpty(parametro.getVeiculo());
+	}
+
+	@Override
+	public double getCusto() {
+
+		return this.parametro.getVeiculo().getFatorMultiplicador() * this.regra.getCusto();
 	}
 }

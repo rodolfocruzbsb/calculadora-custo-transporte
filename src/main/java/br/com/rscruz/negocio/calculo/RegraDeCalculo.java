@@ -3,16 +3,10 @@ package br.com.rscruz.negocio.calculo;
 import br.com.rscruz.model.ParametrosParaCalculoWrapper;
 
 public abstract class RegraDeCalculo {
-	
-	/**
-	 * Método responsável por aplicar a regra de calculo
-	 *
-	 * @author Rodolfo Cruz - rodolfocruz.ti@gmail.com
-	 *
-	 * @param parametro
-	 * @return
-	 */
-	protected abstract double aplicarRegra(ParametrosParaCalculoWrapper parametro);
+
+	protected ParametrosParaCalculoWrapper parametro;
+
+	public abstract double getCusto();
 
 	/**
 	 * 
@@ -36,7 +30,7 @@ public abstract class RegraDeCalculo {
 	 * @param parametro
 	 * @return
 	 */
-	public final double calcular(ParametrosParaCalculoWrapper parametro) {
+	public final double calcular2() {
 
 		double resultado = 0;
 
@@ -44,7 +38,7 @@ public abstract class RegraDeCalculo {
 
 		if (validar(parametro)) {
 
-			resultado = aplicarRegra(parametro);
+			resultado = getCusto();
 		}
 
 		return resultado;
@@ -66,7 +60,5 @@ public abstract class RegraDeCalculo {
 		}
 
 	}
-
-
 
 }

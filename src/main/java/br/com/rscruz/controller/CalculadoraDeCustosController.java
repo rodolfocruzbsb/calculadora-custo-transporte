@@ -65,7 +65,7 @@ public class CalculadoraDeCustosController {
 			model.addAttribute("sucesso", "Calculo realizado com sucesso.");
 			return "calculo/resultado";
 		} catch (Exception e) {
-			LOGGER.error("Erro ao realizar calculo.", e);
+			LOGGER.debug("Erro ao realizar calculo.", e);
 			redirectAttributes.addFlashAttribute("erro", "Problema ao realizar o calculo. Motivo: "+ e.getMessage());
 		}
 		return "redirect:/calculadora/";

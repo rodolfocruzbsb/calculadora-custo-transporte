@@ -2,17 +2,25 @@ package br.com.rscruz.negocio.calculo;
 
 import br.com.rscruz.model.ParametrosParaCalculoWrapper;
 
-public class RegraDeCalculoPorRodoviaNaoPavimentada extends RegraDeCalculo {
+public class RegraDeCalculoPorRodoviaNaoPavimentada extends RegraDeCalculoDecorator {
 
-	@Override
-	protected double aplicarRegra(ParametrosParaCalculoWrapper parametro) {
+	public RegraDeCalculoPorRodoviaNaoPavimentada( RegraDeCalculo regra ) {
 
-		return parametro.getDistanciaNaoPavimentada().getValor();
+		this.regra = regra;
+
+		this.parametro = this.regra.parametro;
+
 	}
 
 	@Override
 	protected boolean validar(ParametrosParaCalculoWrapper parametro) {
 
 		return parametro.temQuantidadeDeQuilometrosNaoPavimentadosInformada();
+	}
+
+	@Override
+	public double getCusto() {
+
+		return this.parametro.getDistanciaNaoPavimentada().getValor() + this.regra.getCusto();
 	}
 }

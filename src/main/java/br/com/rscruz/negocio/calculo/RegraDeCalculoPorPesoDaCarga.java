@@ -2,33 +2,41 @@ package br.com.rscruz.negocio.calculo;
 
 import br.com.rscruz.model.ParametrosParaCalculoWrapper;
 
-public class RegraDeCalculoPorPesoDaCarga extends RegraDeCalculo {
+public class RegraDeCalculoPorPesoDaCarga extends RegraDeCalculoDecorator {
 
 	private static final double FATOR_DE_AJUSTE = 0.02;
 
 	private static final int LIMITE_DE_TONELADAS = 5;
 
-	@Override
-	protected double aplicarRegra(ParametrosParaCalculoWrapper parametro) {
+	public RegraDeCalculoPorPesoDaCarga( RegraDeCalculo regra ) {
 
-		double resultado = 0;
+		this.regra = regra;
 
-		if (parametro.getToneladas() > LIMITE_DE_TONELADAS) {
+		this.parametro = this.regra.parametro;
 
-			double quilometragemTotal = parametro.getDistanciaPavimentada().getQuantidadeDeQuilometros()
-
-					+ parametro.getDistanciaNaoPavimentada().getQuantidadeDeQuilometros();
-
-			int toneladasPassiveisDeCalculo = parametro.getToneladas() - LIMITE_DE_TONELADAS;
-
-			resultado += quilometragemTotal * toneladasPassiveisDeCalculo * FATOR_DE_AJUSTE;
-		}
-		return resultado;
 	}
 
 	@Override
 	protected boolean validar(ParametrosParaCalculoWrapper parametro) {
 
 		return parametro.getToneladas() > 0;
+	}
+
+	@Override
+	public double getCusto() {
+
+		double resultado = 0;
+
+		if (this.parametro.getToneladas() > LIMITE_DE_TONELADAS) {
+
+			double quilometragemTotal = this.parametro.getDistanciaPavimentada().getQuantidadeDeQuilometros()
+
+					+ this.parametro.getDistanciaNaoPavimentada().getQuantidadeDeQuilometros();
+
+			int toneladasPassiveisDeCalculo = this.parametro.getToneladas() - LIMITE_DE_TONELADAS;
+
+			resultado += quilometragemTotal * toneladasPassiveisDeCalculo * FATOR_DE_AJUSTE;
+		}
+		return resultado + this.regra.getCusto();
 	}
 }

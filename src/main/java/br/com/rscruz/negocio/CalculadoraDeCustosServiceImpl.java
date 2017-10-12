@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.rscruz.model.ParametrosParaCalculoWrapper;
-import br.com.rscruz.negocio.calculo.MotorDeCalculo;
+import br.com.rscruz.negocio.calculo.RegraDeCalculo;
+import br.com.rscruz.negocio.calculo.RegraDeCalculoPadrao;
 import br.com.rscruz.negocio.calculo.RegraDeCalculoPorPesoDaCarga;
 import br.com.rscruz.negocio.calculo.RegraDeCalculoPorRodoviaNaoPavimentada;
 import br.com.rscruz.negocio.calculo.RegraDeCalculoPorRodoviaPavimentada;
+import br.com.rscruz.negocio.calculo.RegraDeCalculoPorTipoDeVeiculo;
 
 /**
  * <p>
@@ -44,21 +46,25 @@ public class CalculadoraDeCustosServiceImpl implements CalculadoraDeCustosServic
 
 		this.carregarObjetos(parametrosParaCalculo);
 
-		MotorDeCalculo motorDeCalculo = new MotorDeCalculo(parametrosParaCalculo);
+		RegraDeCalculo regraDeCalculo = new RegraDeCalculoPadrao(parametrosParaCalculo);
 
-		motorDeCalculo.adicionar(new RegraDeCalculoPorRodoviaPavimentada());
-		
-		motorDeCalculo.adicionar(new RegraDeCalculoPorRodoviaNaoPavimentada());
+		regraDeCalculo = new RegraDeCalculoPorRodoviaPavimentada(regraDeCalculo);
+		regraDeCalculo = new RegraDeCalculoPorRodoviaNaoPavimentada(regraDeCalculo);
+		regraDeCalculo = new RegraDeCalculoPorTipoDeVeiculo(regraDeCalculo);
+		regraDeCalculo = new RegraDeCalculoPorPesoDaCarga(regraDeCalculo);
 
-		motorDeCalculo.adicionar(new RegraDeCalculoPorPesoDaCarga());
-
-		double resultado = motorDeCalculo.calcular();
-
-		resultado *= parametrosParaCalculo.getVeiculo().getFatorMultiplicador();
+		double resultado = regraDeCalculo.calcular2();
 
 		return resultado;
 	}
 
+	/**
+	 * Método responsável por caregar objetos via repositorio
+	 *
+	 * @author Rodolfo Cruz - rodolfocruz.ti@gmail.com
+	 *
+	 * @param parametrosParaCalculo
+	 */
 	private void carregarObjetos(ParametrosParaCalculoWrapper parametrosParaCalculo) {
 
 		parametrosParaCalculo.setVeiculo(veiculoService.buscarPorId(parametrosParaCalculo.getVeiculo().getId()).get());
