@@ -53,13 +53,13 @@ public class CalculadoraDeCustosControllerTests extends CalculadoraCustoTranspor
 	}
 
 	@Test
-	public void testGETIndex() throws Exception {
+	public void testaRequisicaoViaGETDaPaginaInicial() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/calculadora")).andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
 	@Test
-	public void testPOSTcalcular() throws Exception {
+	public void testaRequisicaoViaPOSTcomEntradaValida() throws Exception {
 
 		this.mockMvc.perform(
 
@@ -80,7 +80,7 @@ public class CalculadoraDeCustosControllerTests extends CalculadoraCustoTranspor
 	}
 
 	@Test
-	public void testPOSTcalcularComErroNosDadosDeEntrada() throws Exception {
+	public void testaRequisicaoViaPOSTComErroNosDadosDeEntrada() throws Exception {
 
 		this.mockMvc.perform(
 

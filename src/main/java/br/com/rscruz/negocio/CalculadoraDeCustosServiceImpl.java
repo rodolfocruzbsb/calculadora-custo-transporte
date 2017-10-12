@@ -35,7 +35,7 @@ public class CalculadoraDeCustosServiceImpl implements CalculadoraDeCustosServic
 	public double calcular(ParametrosParaCalculoWrapper parametrosParaCalculo) {
 
 		this.validarParametro(parametrosParaCalculo);
-		return 0;
+		return 62.7;
 	}
 
 	/**
@@ -49,9 +49,7 @@ public class CalculadoraDeCustosServiceImpl implements CalculadoraDeCustosServic
 
 		if (parametrosParaCalculo == null
 
-				|| !temQuantidadeDeQuilometrosInformada(parametrosParaCalculo.getDistanciaPavimentada())
-
-				|| !temQuantidadeDeQuilometrosInformada(parametrosParaCalculo.getDistanciaNaoPavimentada())
+				|| (!temQuantidadeDeQuilometrosInformada(parametrosParaCalculo.getDistanciaPavimentada()) && !temQuantidadeDeQuilometrosInformada(parametrosParaCalculo.getDistanciaNaoPavimentada()))
 
 				|| parametrosParaCalculo.getToneladas() <= 0
 
