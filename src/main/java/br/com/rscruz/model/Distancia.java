@@ -142,6 +142,11 @@ public class Distancia {
 
 		return tipoDeVia;
 	}
+	
+	public double getValor() {
+		
+		return this.tipoDeVia.getTotalPor(quantidadeDeQuilometros);
+	}
 
 	/**
 	 * Descrição Padrão: <br>
