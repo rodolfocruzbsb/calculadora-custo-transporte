@@ -1,0 +1,8 @@
+language: java
+jdk:
+ - oraclejdk8
+notifications:
+  email:
+    recipients:
+      - rodolfocruz.ti@gmail.com
+    on_success: always
