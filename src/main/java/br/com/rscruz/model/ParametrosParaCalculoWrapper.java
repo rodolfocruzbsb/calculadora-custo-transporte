@@ -1,5 +1,7 @@
 package br.com.rscruz.model;
 
+import org.springframework.util.ObjectUtils;
+
 /**
  * <p>
  * <b>Title:</b> ParametrosParaCalculoWrapper.java
@@ -20,9 +22,9 @@ public class ParametrosParaCalculoWrapper {
 
 	private int toneladas;
 
-	private Distancia distanciaPavimentada = Distancia.novaPavimentada();
+	private final Distancia distanciaPavimentada = Distancia.novaPavimentada();
 
-	private Distancia distanciaNaoPavimentada = Distancia.novaNaoPavimentada();
+	private final Distancia distanciaNaoPavimentada = Distancia.novaNaoPavimentada();
 
 	public ParametrosParaCalculoWrapper() {
 
@@ -79,16 +81,6 @@ public class ParametrosParaCalculoWrapper {
 	}
 
 	/**
-	 * Define o valor do atributo <code>distanciaPavimentada</code>.
-	 *
-	 * @param distanciaPavimentada
-	 */
-	public void setDistanciaPavimentada(Distancia distanciaPavimentada) {
-
-		this.distanciaPavimentada = distanciaPavimentada;
-	}
-
-	/**
 	 * Retorna o valor do atributo <code>distanciaNaoPavimentada</code>
 	 *
 	 * @return <code>Distancia</code>
@@ -99,13 +91,55 @@ public class ParametrosParaCalculoWrapper {
 	}
 
 	/**
-	 * Define o valor do atributo <code>distanciaNaoPavimentada</code>.
+	 * Método responsável por verificar se o objeto em questao tem os parametros minimos para o calculo
 	 *
-	 * @param distanciaNaoPavimentada
+	 * @author Rodolfo Cruz - rodolfocruz.ti@gmail.com
+	 *
+	 * @return
 	 */
-	public void setDistanciaNaoPavimentada(Distancia distanciaNaoPavimentada) {
+	public boolean temParametrosMinimos() {
 
-		this.distanciaNaoPavimentada = distanciaNaoPavimentada;
+		return temPeloMenosUmaDistanciaInformada()
+
+				&& this.getToneladas() > 0
+
+				&& !ObjectUtils.isEmpty(this.getVeiculo());
+
+	}
+
+	/**
+	 * Método responsável por verificar se tem pelo menos uma distância informada
+	 *
+	 * @author Rodolfo Cruz - rodolfocruz.ti@gmail.com
+	 *
+	 * @return
+	 */
+	public boolean temPeloMenosUmaDistanciaInformada() {
+
+		return temQuantidadeDeQuilometrosInformada(this.getDistanciaPavimentada()) || temQuantidadeDeQuilometrosInformada(this.getDistanciaNaoPavimentada());
+	}
+
+	/**
+	 * Método responsável por verificar se tem dados informado na distância
+	 *
+	 * @author Rodolfo Cruz - rodolfocruz.ti@gmail.com
+	 *
+	 * @param distancia
+	 * @return
+	 */
+	private boolean temQuantidadeDeQuilometrosInformada(Distancia distancia) {
+
+		return !ObjectUtils.isEmpty(distancia) && distancia.getQuantidadeDeQuilometros() > 0;
+	}
+	
+	public boolean temQuantidadeDeQuilometrosPavimentadosInformada() {
+
+		return !ObjectUtils.isEmpty(this.getDistanciaPavimentada()) && this.getDistanciaPavimentada().getQuantidadeDeQuilometros() > 0;
+	}
+	
+	public boolean temQuantidadeDeQuilometrosNaoPavimentadosInformada() {
+
+		return !ObjectUtils.isEmpty(this.getDistanciaNaoPavimentada()) && this.getDistanciaNaoPavimentada().getQuantidadeDeQuilometros() > 0;
 	}
 
 	/**

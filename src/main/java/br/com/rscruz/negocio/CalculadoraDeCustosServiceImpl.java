@@ -1,10 +1,13 @@
 package br.com.rscruz.negocio;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
-import br.com.rscruz.model.Distancia;
 import br.com.rscruz.model.ParametrosParaCalculoWrapper;
+import br.com.rscruz.negocio.calculo.MotorDeCalculo;
+import br.com.rscruz.negocio.calculo.RegraDeCalculoPorPesoDaCarga;
+import br.com.rscruz.negocio.calculo.RegraDeCalculoPorRodoviaNaoPavimentada;
+import br.com.rscruz.negocio.calculo.RegraDeCalculoPorRodoviaPavimentada;
 
 /**
  * <p>
@@ -23,6 +26,9 @@ import br.com.rscruz.model.ParametrosParaCalculoWrapper;
 @Service("calculadoraDeCustosService")
 public class CalculadoraDeCustosServiceImpl implements CalculadoraDeCustosService {
 
+	@Autowired
+	private VeiculoService veiculoService;
+
 	/**
 	 * Descrição Padrão: <br>
 	 * <br>
@@ -35,21 +41,28 @@ public class CalculadoraDeCustosServiceImpl implements CalculadoraDeCustosServic
 	public double calcular(ParametrosParaCalculoWrapper parametrosParaCalculo) {
 
 		this.validarParametro(parametrosParaCalculo);
+
+		this.carregarObjetos(parametrosParaCalculo);
+
+		MotorDeCalculo motorDeCalculo = new MotorDeCalculo(parametrosParaCalculo);
+
+		motorDeCalculo.adicionar(new RegraDeCalculoPorRodoviaPavimentada());
 		
-		double resultado = parametrosParaCalculo.getDistanciaPavimentada().getValor();
-		
-		resultado += parametrosParaCalculo.getDistanciaNaoPavimentada().getValor();
-		
+		motorDeCalculo.adicionar(new RegraDeCalculoPorRodoviaNaoPavimentada());
+
+		motorDeCalculo.adicionar(new RegraDeCalculoPorPesoDaCarga());
+
+		double resultado = motorDeCalculo.calcular();
+
 		resultado *= parametrosParaCalculo.getVeiculo().getFatorMultiplicador();
-		
-		if(parametrosParaCalculo.getToneladas() > 5) {
-			
-			double quilometragemTotal = parametrosParaCalculo.getDistanciaPavimentada().getQuantidadeDeQuilometros() + parametrosParaCalculo.getDistanciaNaoPavimentada().getQuantidadeDeQuilometros();
-			
-			resultado += quilometragemTotal * ((parametrosParaCalculo.getToneladas() - 5) * 0.02 );
-		}
-		
+
 		return resultado;
+	}
+
+	private void carregarObjetos(ParametrosParaCalculoWrapper parametrosParaCalculo) {
+
+		parametrosParaCalculo.setVeiculo(veiculoService.buscarPorId(parametrosParaCalculo.getVeiculo().getId()).get());
+
 	}
 
 	/**
@@ -63,20 +76,11 @@ public class CalculadoraDeCustosServiceImpl implements CalculadoraDeCustosServic
 
 		if (parametrosParaCalculo == null
 
-				|| (!temQuantidadeDeQuilometrosInformada(parametrosParaCalculo.getDistanciaPavimentada()) && !temQuantidadeDeQuilometrosInformada(parametrosParaCalculo.getDistanciaNaoPavimentada()))
-
-				|| parametrosParaCalculo.getToneladas() <= 0
-
-				|| ObjectUtils.isEmpty(parametrosParaCalculo.getVeiculo())) {
+				|| !parametrosParaCalculo.temParametrosMinimos()) {
 
 			throw new IllegalArgumentException("Parâmetro não está preenchido com os valores esperados.");
 		}
 
-	}
-
-	private boolean temQuantidadeDeQuilometrosInformada(Distancia distancia) {
-
-		return !ObjectUtils.isEmpty(distancia) && distancia.getQuantidadeDeQuilometros() > 0;
 	}
 
 }

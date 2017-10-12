@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -55,11 +56,14 @@ public class CalculadoraDeCustosController {
 	}
 
 	@PostMapping("/calcular")
-	public String calcular(@ModelAttribute("parametrosDeCalculo") ParametrosParaCalculoWrapper parametro, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String calcular(@ModelAttribute("parametrosDeCalculo") ParametrosParaCalculoWrapper parametro, BindingResult bindingResult, RedirectAttributes redirectAttributes, ModelMap model) {
 
 		try {
-			calculadoraDeCustosService.calcular(parametro);
-			redirectAttributes.addFlashAttribute("sucesso", "Calculo realizado com sucesso.");
+			double resultado = calculadoraDeCustosService.calcular(parametro);
+			model.addAttribute("resultado", resultado);
+			model.addAttribute("parametroParaCalculo", parametro);
+			model.addAttribute("sucesso", "Calculo realizado com sucesso.");
+			return "calculo/resultado";
 		} catch (Exception e) {
 			LOGGER.error("Erro ao realizar calculo.", e);
 			redirectAttributes.addFlashAttribute("erro", "Problema ao realizar o calculo. Motivo: "+ e.getMessage());

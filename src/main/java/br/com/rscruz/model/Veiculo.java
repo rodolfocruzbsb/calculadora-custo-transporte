@@ -113,10 +113,18 @@ public class Veiculo {
 		this.fatorMultiplicador = fatorMultiplicador;
 	}
 
+	/**
+	 * Descrição Padrão: <br>
+	 * <br>
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 
-		return "Veiculo [nome=" + this.nome + ", fatorMultiplicador=" + this.fatorMultiplicador + "]";
+		return "Veiculo [id=" + id + ", nome=" + nome + ", fatorMultiplicador=" + fatorMultiplicador + "]";
 	}
 
 	/**

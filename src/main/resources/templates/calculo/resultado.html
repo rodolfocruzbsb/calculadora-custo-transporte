@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@RodolfoCruzTI - Calculadora de Custos de Transporte</title>
+    
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"   
+    	th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"
+    	rel="stylesheet" media="screen" />
+    	
+    <script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+    	
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
+            th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+            
+</head>
+<body>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>Calculadora de Custos de Transporte</strong>
+        </div>
+        <div class="panel-body">
+              <div class="form-group">
+                  <fieldset>
+                      <div class="card" style="width: 40rem;">
+					  	<div class="card-body">
+							<h4 class="card-title">Detalhes do calculo</h4>						    
+						    <p class="card-text">Veículo: <label><span th:text="${parametroParaCalculo.veiculo.nome}"></span></label></p>
+						    <p class="card-text">KM's pavimentados: <label><span th:text="${parametroParaCalculo.distanciaPavimentada.quantidadeDeQuilometros}"></span></label></p>
+						    <p class="card-text">KM's não pavimentados: <label><span th:text="${parametroParaCalculo.distanciaNaoPavimentada.quantidadeDeQuilometros}"></span></label></p>
+						    <p class="card-text">Toneladas: <label><span th:text="${parametroParaCalculo.toneladas}"></span></label></p>
+						    <p class="card-text">Custo estimado: <label><span th:text="${resultado}"></span></label></p>
+						    <a href="#" th:href="@{/calculadora}" class="card-link">Voltar</a>
+						  </div>
+						</div>
+                                            
+                  </fieldset>
+              </div>
+        </div>
+    </div>
+</body>
+</html>

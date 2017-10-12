@@ -9,9 +9,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import br.com.rscruz.configuracoes.CalculadoraCustoTransporteApplicationTests;
-import br.com.rscruz.controller.CalculadoraDeCustosController;
-import br.com.rscruz.model.Distancia;
 import br.com.rscruz.model.ParametrosParaCalculoWrapper;
+import br.com.rscruz.model.Veiculo;
+import br.com.rscruz.model.utils.ParametrosParaCalculoWrapperBuilder;
 import br.com.rscruz.negocio.VeiculoService;
 
 /**
@@ -45,11 +45,20 @@ public class CalculadoraDeCustosControllerTests extends CalculadoraCustoTranspor
 
 		this.mockMvc = MockMvcBuilders.standaloneSetup(this.calculadoraDeCustosController).build();
 
-		parametro = new ParametrosParaCalculoWrapper();
-		parametro.setDistanciaNaoPavimentada(Distancia.novaPavimentadaCom(80));
-		parametro.setDistanciaPavimentada(Distancia.novaNaoPavimentadaCom(20));
-		parametro.setVeiculo(this.veiculoService.buscarPorId(1l).get());
-		parametro.setToneladas(6);
+		final Veiculo bau = this.veiculoService.buscarPorId(1l).get();
+
+		this.parametro = ParametrosParaCalculoWrapperBuilder.criar()
+
+				.comDistanciaPavimentada(80)
+
+				.comDistanciaNaoPavimentada(20)
+
+				.comVeiculo(bau)
+
+				.comToneladas(6)
+
+				.controi();
+
 	}
 
 	@Test
@@ -67,16 +76,13 @@ public class CalculadoraDeCustosControllerTests extends CalculadoraCustoTranspor
 
 						.param("toneladas", String.valueOf(this.parametro.getToneladas()))
 
-						.param("veiculo.fatorMultiplicador", String.valueOf(this.parametro.getVeiculo().getFatorMultiplicador()))
-
-						.param("veiculo.nome", String.valueOf(this.parametro.getVeiculo().getNome()))
+						.param("veiculo.id", String.valueOf(this.parametro.getVeiculo().getId()))
 
 						.param("distanciaPavimentada.quantidadeDeQuilometros", String.valueOf(this.parametro.getDistanciaPavimentada().getQuantidadeDeQuilometros()))
 
 						.param("distanciaNaoPavimentada.quantidadeDeQuilometros", String.valueOf(this.parametro.getDistanciaNaoPavimentada().getQuantidadeDeQuilometros()))
 
-
-		).andExpect(MockMvcResultMatchers.redirectedUrl("/calculadora/")).andExpect(MockMvcResultMatchers.flash().attributeExists("sucesso"));
+		).andExpect(MockMvcResultMatchers.model().attributeExists("sucesso"));
 	}
 
 	@Test
