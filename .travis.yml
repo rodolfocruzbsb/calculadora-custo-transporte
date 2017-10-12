@@ -9,4 +9,4 @@ install: true
 before_script: travis_wait 45 ./mvnw install -q -U -DskipTests=true -Pfast -Dmaven.test.redirectTestOutputToFile=true
 script: ./mvnw install -nsu -Dmaven.test.redirectTestOutputToFile=true -P '!integration'
 before_install:
- - chmod +x gradlew
+ - chmod +x mvnw
