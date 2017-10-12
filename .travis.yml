@@ -9,3 +9,5 @@ notifications:
     recipients:
       - rodolfocruz.ti@gmail.com
     on_success: always
+before_install:
+  - chmod +x mvnw
