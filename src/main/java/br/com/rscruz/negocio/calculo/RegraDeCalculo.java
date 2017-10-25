@@ -30,7 +30,7 @@ public abstract class RegraDeCalculo {
 	 * @param parametro
 	 * @return
 	 */
-	public final double calcular2() {
+	public final double calcular() {
 
 		double resultado = 0;
 

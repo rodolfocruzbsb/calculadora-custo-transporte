@@ -53,7 +53,7 @@ public class CalculadoraDeCustosServiceImpl implements CalculadoraDeCustosServic
 		regraDeCalculo = new RegraDeCalculoPorTipoDeVeiculo(regraDeCalculo);
 		regraDeCalculo = new RegraDeCalculoPorPesoDaCarga(regraDeCalculo);
 
-		double resultado = regraDeCalculo.calcular2();
+		double resultado = regraDeCalculo.calcular();
 
 		return resultado;
 	}
