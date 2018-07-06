@@ -16,7 +16,7 @@ package br.com.rscruz.model;
  */
 public enum TipoDeVia {
 	/** Via PAVIMENTADA. */
-	PAVIMENTADA(0.541),
+	PAVIMENTADA(0.54),
 
 	/** Via NAO_PAVIMENTADA. */
 	NAO_PAVIMENTADA(0.62);
