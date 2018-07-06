@@ -14,7 +14,7 @@ public class VeiculoServiceImpl implements VeiculoService {
 	private static Set<Veiculo> veiculoRepository = new HashSet<Veiculo>();
 
 	static {
-		veiculoRepository.add(Veiculo.novoCom(1l, "Caminhão baú", 2.00));
+		veiculoRepository.add(Veiculo.novoCom(1l, "Caminhão baú", 1.00));
 		veiculoRepository.add(Veiculo.novoCom(2l, "Caminhão caçamba", 1.05));
 		veiculoRepository.add(Veiculo.novoCom(3l, "Carreta", 1.12));
 	}
