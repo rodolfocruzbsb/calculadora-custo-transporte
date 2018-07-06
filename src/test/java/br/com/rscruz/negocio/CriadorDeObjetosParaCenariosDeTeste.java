@@ -7,6 +7,20 @@ import br.com.rscruz.model.ParametrosParaCalculoWrapper;
 import br.com.rscruz.model.Veiculo;
 import br.com.rscruz.model.utils.ParametrosParaCalculoWrapperBuilder;
 
+/**
+ * <p>
+ * <b>Title:</b> CriadorDeObjetosParaCenariosDeTeste.java
+ * </p>
+ * 
+ * <p>
+ * <b>Description:</b> Builder para Cenários de teste
+ * </p>	
+ * 	
+ * 	
+ * @author Rodolfo Cruz - rodolfocruz.ti@gmail.com
+ * 
+ * @version 1.0.0
+ */
 public class CriadorDeObjetosParaCenariosDeTeste {
 
 	public static Map<Integer, ParametrosParaCalculoWrapper> obterCenarios(VeiculoService veiculoService) {
