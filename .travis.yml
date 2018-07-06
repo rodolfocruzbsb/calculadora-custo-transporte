@@ -10,3 +10,7 @@ before_script: travis_wait 45 ./mvnw install -q -U -DskipTests=true -Pfast -Dmav
 script: ./mvnw install -nsu -Dmaven.test.redirectTestOutputToFile=true -P '!integration'
 before_install:
  - chmod +x mvnw
+deploy:
+  provider: heroku
+  api_key:
+    secure: "c4061917-fca3-45ac-9b4f-b7dd5ff144ff"
