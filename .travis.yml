@@ -15,3 +15,5 @@ deploy:
   api_key:
     secure: "c4061917-fca3-45ac-9b4f-b7dd5ff144ff"
   app: rscruz-calculadora-custo
+notifications:
+    slack: vvts-unb-201801:yhVp2cRfF1LsDtKC7mrlGn0v
