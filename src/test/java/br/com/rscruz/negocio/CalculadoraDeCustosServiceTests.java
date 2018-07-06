@@ -13,6 +13,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.rscruz.configuracoes.CalculadoraCustoTransporteApplicationTests;
 import br.com.rscruz.model.ParametrosParaCalculoWrapper;
 
+/**
+ * <p>
+ * <b>Title:</b> CalculadoraDeCustosServiceTests.java
+ * </p>
+ * 
+ * <p>
+ * <b>Description:</b>
+ * </p>	
+ * 	
+ * 	
+ * @author Rodolfo Cruz - rodolfocruz.ti@gmail.com
+ * 
+ * @version 1.0.0
+ */
 public class CalculadoraDeCustosServiceTests extends CalculadoraCustoTransporteApplicationTests {
 
 	private static final double VALOR_PERMITIDO_PARA_IGNORAR_NO_ARREDONDAMENTO = 0.01;
