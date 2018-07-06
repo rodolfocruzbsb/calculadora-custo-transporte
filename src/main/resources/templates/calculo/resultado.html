@@ -32,7 +32,10 @@
 						    <p class="card-text">KM's pavimentados: <label><span th:text="${parametroParaCalculo.distanciaPavimentada.quantidadeDeQuilometros}"></span></label></p>
 						    <p class="card-text">KM's não pavimentados: <label><span th:text="${parametroParaCalculo.distanciaNaoPavimentada.quantidadeDeQuilometros}"></span></label></p>
 						    <p class="card-text">Toneladas: <label><span th:text="${parametroParaCalculo.toneladas}"></span></label></p>
-						    <p class="card-text">Custo estimado: R$ <label><span th:text="${resultado}"></span></label></p>
+						    <p class="card-text">Custo estimado: R$ <input type="number" class="form-control input-sm" th:value="${resultado}" step="0.01" readonly="readonly" id="resultado-custo-estimado" /></p> 
+						    
+						    
+						    
 						    <a href="#" th:href="@{/calculadora}" class="card-link">Voltar</a>
 						  </div>
 						</div>
