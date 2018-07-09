@@ -16,4 +16,4 @@ deploy:
     secure: $HEROKU_API_KEY
   app: rscruz-calculadora-custo
 notifications:
-    slack: $SLACK_KEY
+    slack: vvts-unb-201801:e7sp2yxip9a1LIPcj2xC8Gc0
